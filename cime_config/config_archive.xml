@@ -5,7 +5,7 @@
     <hist_file_extension>hi.*\.nc$</hist_file_extension>
     <rest_history_varname>unset</rest_history_varname>
     <rpointer>
-      <rpointer_file>rpointer.wav$NINST_STRING.$DATESTRING</rpointer_file>
+      <rpointer_file>rpointer.wav$NINST_STRING.$DATENAME</rpointer_file>
       <rpointer_content>unset</rpointer_content>
     </rpointer>
     <test_file_names>
