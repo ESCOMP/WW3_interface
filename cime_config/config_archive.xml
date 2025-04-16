@@ -9,7 +9,6 @@
       <rpointer_content>unset</rpointer_content>
     </rpointer>
     <test_file_names>
-      <tfile disposition="ignore">rpointer.wav.1976-01-00-43200</tfile>
       <tfile disposition="copy">casename.ww3.r.1976-01-01-00000.nc</tfile>
       <tfile disposition="move">casename.ww3.hi.1976-01-01-00000.nc</tfile>
       <tfile disposition="ignore">casename.ww3.hi.1976-01-01-00000.nc.base</tfile>
