@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <testlist version="2.0">
-  <test name="SMS_D" grid="TL319_t232" compset="GW_JRA">
+  <test name="SMS_D_Ld1" grid="TL319_t232" compset="CW_JRA">
     <machines>
       <machine name="derecho" compiler="gnu" category="aux_ww3"/>
     </machines>
@@ -8,6 +8,14 @@
       <option name="wallclock">01:00:00</option>
     </options>
   </test>
+  <test name="SMS_D_Ld1" grid="TL319_t232_wg37" compset="GW_JRA">
+    <machines>
+      <machine name="derecho" compiler="intel" category="aux_ww3"/>
+    </machines>
+    <options>
+      <option name="wallclock">01:00:00</option>
+    </options>
+  </test>  
   <test name="ERS" grid="TL319_t232_wg37" compset="GW_JRA">
     <machines>
       <machine name="derecho" compiler="intel" category="aux_ww3"/>
@@ -16,9 +24,9 @@
       <option name="wallclock">01:00:00</option>
     </options>
   </test>
-  <test name="SMS" grid="TL319_t232_wt232" compset="GW_JRA">
+  <test name="SMS" grid="TL319_t232_wt232" compset="GW_JRA" testmods="ww3/legacy_cpl">
     <machines>
-      <machine name="derecho" compiler="intel" category="aux_ww3"/>
+      <machine name="derecho" compiler="gnu" category="aux_ww3"/>
     </machines>
     <options>
       <option name="wallclock">01:00:00</option>
