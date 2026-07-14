@@ -204,60 +204,95 @@ def _prestage_inputs(case):
     # Prestage necessary files to rundir
     #----------------------------------------------------
     rundir = case.get_value("RUNDIR")
+    mod_def_in = case.get_value("WW3_MODDEF")
+    nest_in = case.get_value("WW3_NEST")
+    # Create a moddef build directory in case of need
+    ww3_moddef_dir = os.path.join(rundir, "ww3_moddef_create")
+    if not os.path.exists(ww3_moddef_dir):
+        os.makedirs(ww3_moddef_dir)
 
-    # Create rundir/ww3_moddef_create
+    # Copy preprocessing executables to ww3_moddef_create directory if they exist in the build directory
     bldroot = os.path.join(case.get_value("EXEROOT"),"wav","obj")
     bld_ww3_grid = os.path.join(bldroot, "ww3_grid") # executable to create mod_def.ww3 file
+    bld_ww3_bounc = os.path.join(bldroot, "ww3_bounc")
     if os.path.isfile(bld_ww3_grid):
-        ww3_moddef_dir = os.path.join(rundir, "ww3_moddef_create")
-        if not os.path.exists(ww3_moddef_dir):
-            os.makedirs(ww3_moddef_dir)
         if not os.path.exists(os.path.join(ww3_moddef_dir, "ww3_grid")):
             safe_copy(bld_ww3_grid, ww3_moddef_dir)
+    if os.path.isfile(bld_ww3_bounc):
+        if not os.path.exists(os.path.join(ww3_moddef_dir, "ww3_bounc")):
+            safe_copy(bld_ww3_bounc, ww3_moddef_dir)
 
-    if case.get_value("WW3_MODDEF") == 'unset':
-        # Create output dir ww3_moddef_create if appropriate
-        output_dir = os.path.join(rundir, "ww3_moddef_create")
-        if not os.path.exists(output_dir):
-            os.makedirs(output_dir)
+    # Copy ww3_inp and other needed info to ww3_moddef_create directory
+    input_dir = case.get_value("WW3_GRID_INP_DIR")
+    if os.path.isdir(input_dir):
+        for filename in os.listdir(input_dir):
+            if not os.path.isfile(os.path.join(ww3_moddef_dir, filename)):
+                safe_copy(os.path.join(input_dir, filename), os.path.join(ww3_moddef_dir, filename))
 
-        # Copy ww3_inp and other needed info to ww3_moddef_create directory
-        input_dir = case.get_value("WW3_GRID_INP_DIR")
-        if os.path.isdir(input_dir):
-            files = os.listdir(input_dir)
-            for filename in files:
-                if not os.path.isfile(os.path.join(output_dir, filename)):
-                    safe_copy(os.path.join(input_dir, filename), os.path.join(output_dir, filename))
-                
+    if mod_def_in == 'unset':
         # Create mod_def file using ww3_grid and the grid_input files
-        if not os.path.isfile(os.path.join(output_dir,"ww3_grid")):
+        if not os.path.isfile(os.path.join(ww3_moddef_dir,"ww3_grid")):
             logger.warning("ww3_grid file not found. The mod_def.ww3 file will be created after the build phase.")
-        elif not os.path.isfile(os.path.join(output_dir,"ww3_grid.inp")):
+        elif not os.path.isfile(os.path.join(ww3_moddef_dir,"ww3_grid.inp")):
             logger.warning("ww3_grid.inp file not found. The file will automatically be downloaded at the ./case.submit phase.")
         else:
             # Generate mod_def.ww3 file using ww3_grid executable and the grid_input files
-            run_cmd("./ww3_grid > mod_def.ww3.log", from_dir=output_dir)
-            if not os.path.isfile(os.path.join(output_dir,"mod_def.ww3")):
+            run_cmd("./ww3_grid > mod_def.ww3.log", from_dir=ww3_moddef_dir)
+            if not os.path.isfile(os.path.join(ww3_moddef_dir,"mod_def.ww3")):
                 raise RuntimeError("mod_def.ww3 was not created, check mod_def.ww3.log for errors.")
-            # Copy mod_def.ww3 to rundir. No binary initial-condition file is
-            # generated: WW3 initial runs start from in-core calm conditions
-            # (or a user-supplied initfile), and restarts are netCDF.
-            shutil.move(os.path.join(output_dir,"mod_def.ww3"), os.path.join(rundir, "mod_def.ww3"))
 
     else:
-        # Use mod_def already created 
-        mod_def_in = case.get_value("WW3_MODDEF")
         if os.path.isfile(mod_def_in):
             import filecmp
             copy_file = False
-            if not os.path.isfile(os.path.join(rundir, "mod_def.ww3")): 
+            if not os.path.isfile(os.path.join(ww3_moddef_dir, "mod_def.ww3")): 
                 copy_file = True
-            elif not filecmp.cmp(mod_def_in, os.path.join(rundir, "mod_def.ww3")):
+            elif not filecmp.cmp(mod_def_in, os.path.join(ww3_moddef_dir, "mod_def.ww3")):
                 copy_file = True
             if copy_file:
-                shutil.copy(mod_def_in, os.path.join(rundir, "mod_def.ww3"))
+                shutil.copy(mod_def_in, os.path.join(ww3_moddef_dir, "mod_def.ww3"))
+        
         else:
             raise RuntimeError("mod_def_in {} does not exist on disk".format(mod_def_in))
+
+    if nest_in == "unset":
+        boundary_nml = os.path.join(ww3_moddef_dir, "ww3_bounc.nml") # Copied from WW3_GRID_INP_DIR
+        if not os.path.isfile(os.path.join(ww3_moddef_dir, "ww3_bounc")):
+            logger.warning("ww3_bounc file not found. The nest.ww3 file will be created after the build phase.")
+        elif not os.path.isfile(boundary_nml):
+            logger.warning("ww3_bounc.nml file not found; skipping nest.ww3 generation.")
+        elif not os.path.isfile(os.path.join(ww3_moddef_dir,"mod_def.ww3")):
+            logger.warning("mod_def.ww3 not found; skipping nest.ww3 generation until the grid is built.")
+        else:
+            # Generate boundary conditions using ww3_bounc executable and the boundary input files
+            run_cmd("./ww3_bounc > nest.ww3.log", from_dir=ww3_moddef_dir)
+            if not os.path.isfile(os.path.join(ww3_moddef_dir,"nest.ww3")):
+                raise RuntimeError("nest.ww3 was not created, check nest.ww3.log for errors.")
+            # Copy nest.ww3 to rundir. 
+            shutil.move(os.path.join(ww3_moddef_dir,"nest.ww3"), os.path.join(rundir, "nest.ww3"))
+
+
+        
+    else:
+        if os.path.isfile(nest_in):
+            import filecmp
+            copy_file = False
+            if not os.path.isfile(os.path.join(rundir, "nest.ww3")): 
+                copy_file = True
+            elif not filecmp.cmp(nest_in, os.path.join(rundir, "nest.ww3")):
+                copy_file = True
+            if copy_file:
+                shutil.copy(nest_in, os.path.join(rundir, "nest.ww3"))
+        else:
+            raise RuntimeError("nest_in {} does not exist on disk".format(nest_in))
+
+    # now move mod_def.ww3, after ww3_bounc has had a chance to read it
+    # Copy mod_def.ww3 to rundir. No binary initial-condition file is
+    # generated: WW3 initial runs start from in-core calm conditions
+    # (or a user-supplied initfile), and restarts are netCDF.
+    if os.path.isfile(os.path.join(ww3_moddef_dir,"mod_def.ww3")):
+        shutil.move(os.path.join(ww3_moddef_dir,"mod_def.ww3"), os.path.join(rundir, "mod_def.ww3"))
+
             
 ###############################################################################
 def _main_func():
