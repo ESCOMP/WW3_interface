@@ -33,18 +33,13 @@
     <group>ww3_inparm</group>
     <category>setup</category>
     <values>
-      <value runtype="startup">"" </value>
-      <value runtype="hybrid" >"" </value>
-      <value runtype="startup"	ww3_moddef="unset">"calm_strt.ww3" </value>
-      <value runtype="hybrid"	ww3_moddef="unset">"calm_strt.ww3" </value>
-      <value runtype="startup"	wav_grid="wtnx1v4nw"	ww3_moddef="unset">' '</value>
-      <value runtype="hybrid"	wav_grid="wtnx1v4nw"	ww3_moddef="unset">' '</value>
-      <value runtype="startup"	wav_grid="wtnx1v4"	ww3_moddef="unset">$DIN_LOC_ROOT/wav/ww3/wtnx1v4.restart.ww3.230308</value>
-      <value runtype="hybrid"	wav_grid="wtnx1v4"	ww3_moddef="unset">$DIN_LOC_ROOT/wav/ww3/wtnx1v4.restart.ww3.230308</value>
+      <value runtype="startup">""</value>
+      <value runtype="hybrid" >""</value>
     </values>
     <desc>
       Initial condition file.
       This is set in ww buildnml from refacase and refdate for branch runs
+      For initial runs assume calm data - or point to a netcdf restart file.
     </desc>
   </entry>
 
@@ -217,39 +212,6 @@
       Minimum dynamic time step for source
     </desc>
   </entry>
-
-  <entry id='domain_percent_start'>
-    <type>char</type>
-    <group>domain_nml</group>
-    <category>setup</category>
-    <values>
-      <value>unset</value>
-    </values>
-  </entry>
-  <entry id="domain_percent_stop">
-    <type>char</type>
-    <group>domain_nml</group>
-    <category>setup</category>
-    <values>
-      <value>'99990101 0'</value>
-    </values>
-  </entry>
-
-  <entry id="domain_percent_iostyp">
-    <type>integer</type>
-    <group>domain_nml</group>
-    <category>setup</category>
-    <desc>
-      WW3 restart/output I/O type. 0 = no dedicated output process, each process
-      writes its own data (requires a parallel file system); 1 = no dedicated
-      output process, gather to a single writer (any file system); 2 = single
-      dedicated output process; 3 = multiple dedicated output processes.
-    </desc>
-    <values>
-      <value>1</value>
-    </values>
-  </entry>
-
   <entry id="input_percent_forcing_percent_water_levels">
     <type>char</type>
     <group>input_nml</group>
@@ -392,9 +354,10 @@
     <group>output_type_nml</group>
     <category>setup</category>
     <values>
-      <value>WND ICE HS T02 T0M1 T01 FP DIR EF USS TOC</value>
+      <value>WND ICE HS T02 T0M1 T01 FP DP DIR EF USS TOC PHS PDIR PT01 PTM10</value>
     </values>
   </entry>
+
   <entry id="type_percent_point_percent_file">
     <type>char</type>
     <group>output_type_nml</group>
@@ -404,86 +367,37 @@
     </values>
   </entry>
 
-  <entry id="date_percent_field_percent_outffile">
+  <entry id="history_option">
     <type>char</type>
-    <group>output_date_nml</group>
-    <category>setup</category>
+    <category>time</category>
+    <group>ww3_inparm</group>
+    <valid_values>never,nseconds,nhours,ndays,nmonths,nyears,monthly,yearly,end</valid_values>
+    <desc>
+      ww3 history output option (used with history_n)
+      history_option alarms are:
+      [never], turns option off
+      [nseconds] , history snapshot every history_n nseconds, relative to current run start time
+      [nhours]   , history snapshot every history_n nhours  , relative to current run start time
+      [ndays]    , history snapshot every history_n ndays   , relative to current run start time
+      [monthly]  , history snapshot every           month   , relative to current run start time
+      [nmonths]  , history snapshot every history_n nmonths , relative to current run start time
+      [yearly]   , history snapshot every year              , relative to current run start time
+      [end]      , history snapshot at end
+    </desc>
+    <values>
+      <value>never</value>
+    </values>
+  </entry>
+
+  <entry id="history_n">
+    <type>integer</type>
+    <category>time</category>
+    <group>ww3_inparm</group>
+    <desc>
+      sets history file frequency
+    </desc>
     <values>
       <value>1</value>
-    </values>
-  </entry>
-  <entry id="date_percent_field_percent_start">
-    <type>char</type>
-    <group>output_date_nml</group>
-    <category>setup</category>
-    <values>
-      <value>unset</value>
-    </values>
-  </entry>
-  <entry id="date_percent_field_percent_stride">
-    <type>char</type>
-    <group>output_date_nml</group>
-    <category>setup</category>
-    <values>
-      <value>unset</value>
-    </values>
-  </entry>
-  <entry id="date_percent_field_percent_stop">
-    <type>char</type>
-    <group>output_date_nml</group>
-    <category>setup</category>
-    <values>
-      <value>99990101 0</value>
-    </values>
-  </entry>
-
-  <entry id="date_percent_restart_percent_start">
-    <type>char</type>
-    <group>output_date_nml</group>
-    <category>setup</category>
-    <values>
-      <value>unset</value>
-    </values>
-  </entry>
-  <entry id="date_percent_restart_percent_stride">
-    <type>char</type>
-    <group>output_date_nml</group>
-    <category>setup</category>
-    <values>
-      <value>unset</value>
-    </values>
-  </entry>
-  <entry id="date_percent_restart_percent_stop">
-    <type>char</type>
-    <group>output_date_nml</group>
-    <category>setup</category>
-    <values>
-      <value>99990101 0</value>
-    </values>
-  </entry>
-
-  <entry id="date_percent_restart2_percent_start">
-    <type>char</type>
-    <group>output_date_nml</group>
-    <category>setup</category>
-    <values>
-      <value>99990101 0</value>
-    </values>
-  </entry>
-  <entry id="date_percent_restart2_percent_stride">
-    <type>char</type>
-    <group>output_date_nml</group>
-    <category>setup</category>
-    <values>
-      <value>0</value>
-    </values>
-  </entry>
-  <entry id="date_percent_restart2_percent_stop">
-    <type>char</type>
-    <group>output_date_nml</group>
-    <category>setup</category>
-    <values>
-      <value>99990101 0</value>
     </values>
   </entry>
 

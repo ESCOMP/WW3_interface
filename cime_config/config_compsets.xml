@@ -4,15 +4,15 @@
 
   <help>
     Each compset node is associated with the following elements
-    - lname      
-    - alias        
+    - lname
+    - alias
     - support  (optional description of the support level for this compset)
     Each compset node can also have the following attributes
     - grid  (optional regular expression match for grid to work with the compset)
   </help>
 
   <compset>
-    <alias>WW3test</alias>   
+    <alias>WW3test</alias>
     <lname>2000_DATM%NYF_SLND_SICE_SOCN_SROF_SGLC_WW3</lname>
   </compset>
 

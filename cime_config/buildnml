@@ -81,27 +81,19 @@ def _create_namelists(case, confdir, namelist_infile, nmlgen, data_list_path):
         else:
             nmlgen.set_value("initfile", "")
 
-    # error check 
+    # error check
     dtcpl = basedt / int(ncpl)
     dtmax = int(float(nmlgen.get_value('dtmax')))
     if dtcpl%dtmax != 0:
         expect(False,
                'dtcpl {} is not a multiple of dtmax {}'.format(dtcpl,dtmax))
 
-    nmlgen.set_value("domain_percent_start", f"{start_date} {start_tod}")
-
-    nmlgen.set_value("date_percent_field_percent_start"  , f"{start_date} {start_tod}")
-    nmlgen.set_value("date_percent_restart_percent_start", f"{start_date} {start_tod}")
-
-    nmlgen.set_value("date_percent_field_percent_stride"  , f"{dtime_sync}")
-    nmlgen.set_value("date_percent_restart_percent_stride", f"{dtime_sync}")
-
     # write diagnostic info
     logger.debug("ww3 initial conditions file is %s", nmlgen.get_value("initfile"))
 
     namelist_file = os.path.join(confdir, "wav_in")
-    nmlgen.write_output_file(namelist_file, data_list_path, 
-                             groups=["domain_nml","input_nml","output_type_nml","output_date_nml","ww3_inparm"], 
+    nmlgen.write_output_file(namelist_file, data_list_path,
+                             groups=["input_nml","output_type_nml","ww3_inparm"],
                              sorted_groups=False)
 
     from pathlib import Path
@@ -196,7 +188,7 @@ def buildnml(case, caseroot, compname):
             shutil.copy2(file1, file2)
 
     _prestage_inputs(case)
-            
+
 ###############################################################################
 def _prestage_inputs(case):
 ###############################################################################
@@ -228,7 +220,7 @@ def _prestage_inputs(case):
             for filename in files:
                 if not os.path.isfile(os.path.join(output_dir, filename)):
                     safe_copy(os.path.join(input_dir, filename), os.path.join(output_dir, filename))
-                
+
         # Create mod_def file using ww3_grid and the grid_input files
         if not os.path.isfile(os.path.join(output_dir,"ww3_grid")):
             logger.warning("ww3_grid file not found. The mod_def.ww3 file will be created after the build phase.")
@@ -245,12 +237,12 @@ def _prestage_inputs(case):
             shutil.move(os.path.join(output_dir,"mod_def.ww3"), os.path.join(rundir, "mod_def.ww3"))
 
     else:
-        # Use mod_def already created 
+        # Use mod_def already created
         mod_def_in = case.get_value("WW3_MODDEF")
         if os.path.isfile(mod_def_in):
             import filecmp
             copy_file = False
-            if not os.path.isfile(os.path.join(rundir, "mod_def.ww3")): 
+            if not os.path.isfile(os.path.join(rundir, "mod_def.ww3")):
                 copy_file = True
             elif not filecmp.cmp(mod_def_in, os.path.join(rundir, "mod_def.ww3")):
                 copy_file = True
@@ -258,7 +250,7 @@ def _prestage_inputs(case):
                 shutil.copy(mod_def_in, os.path.join(rundir, "mod_def.ww3"))
         else:
             raise RuntimeError("mod_def_in {} does not exist on disk".format(mod_def_in))
-            
+
 ###############################################################################
 def _main_func():
 ###############################################################################
