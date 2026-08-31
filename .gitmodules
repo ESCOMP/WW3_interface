@@ -1,7 +1,7 @@
 [submodule "WW3"]
 path = WW3
-url = https://github.com/ESCOMP/WW3.git
-fxtag = dev/unified_0.1.0
+url = https://github.com/CROCODILE-CESM/WW3.git
+fxtag = regional
 fxrequired = AlwaysRequired
-fxDONOTUSEurl = https://github.com/ESCOMP/WW3.git
+fxDONOTUSEurl = https://github.com/CROCODILE-CESM/WW3.git
 
