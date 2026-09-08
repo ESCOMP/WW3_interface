@@ -153,6 +153,28 @@
     <desc>Grid strt file; listed so check_input_data can download it.</desc>
   </entry>
 
+  <entry id="grid_inp_nml">
+    <type>char</type>
+    <group>prestage_only</group>
+    <category>prestage_only</category>
+    <input_pathname>abs</input_pathname>
+    <values>
+      <value>UNSET</value>
+    </values>
+    <desc>Grid namelists file for unstructured grids; listed so check_input_data can download it.</desc>
+  </entry>
+
+  <entry id="grid_inp_mesh">
+    <type>char</type>
+    <group>prestage_only</group>
+    <category>prestage_only</category>
+    <input_pathname>abs</input_pathname>
+    <values>
+      <value>UNSET</value>
+    </values>
+    <desc>Unstructured grid mesh; listed so check_input_data can download it.</desc>
+  </entry>
+
   <entry id="dtmax">
     <type>real</type>
     <group>ww3_inparm</group>
