@@ -46,7 +46,7 @@
     <group>case_comp</group>
     <file>env_build.xml</file>
     <desc>mod_def file to use. The value depends on the switches, if you have an unstructured mesh and the
-    wave propoagation scheme. Note that this file is renamed to mod_def.ww3 in the run directory.
+    wave propagation scheme. Note that this file is renamed to mod_def.ww3 in the run directory.
     </desc>
   </entry>
 

@@ -81,27 +81,19 @@ def _create_namelists(case, confdir, namelist_infile, nmlgen, data_list_path):
         else:
             nmlgen.set_value("initfile", "")
 
-    # error check 
+    # error check
     dtcpl = basedt / int(ncpl)
     dtmax = int(float(nmlgen.get_value('dtmax')))
     if dtcpl%dtmax != 0:
         expect(False,
                'dtcpl {} is not a multiple of dtmax {}'.format(dtcpl,dtmax))
 
-    nmlgen.set_value("domain_percent_start", f"{start_date} {start_tod}")
-
-    nmlgen.set_value("date_percent_field_percent_start"  , f"{start_date} {start_tod}")
-    nmlgen.set_value("date_percent_restart_percent_start", f"{start_date} {start_tod}")
-
-    nmlgen.set_value("date_percent_field_percent_stride"  , f"{dtime_sync}")
-    nmlgen.set_value("date_percent_restart_percent_stride", f"{dtime_sync}")
-
     # write diagnostic info
     logger.debug("ww3 initial conditions file is %s", nmlgen.get_value("initfile"))
 
     namelist_file = os.path.join(confdir, "wav_in")
-    nmlgen.write_output_file(namelist_file, data_list_path, 
-                             groups=["domain_nml","input_nml","output_type_nml","output_date_nml","ww3_inparm"], 
+    nmlgen.write_output_file(namelist_file, data_list_path,
+                             groups=["input_nml","output_type_nml","ww3_inparm"],
                              sorted_groups=False)
 
     from pathlib import Path
@@ -196,7 +188,7 @@ def buildnml(case, caseroot, compname):
             shutil.copy2(file1, file2)
 
     _prestage_inputs(case)
-            
+
 ###############################################################################
 def _prestage_inputs(case):
 ###############################################################################

@@ -11,22 +11,21 @@
 !
 ! input_percent_forcing_percent_water_levels=>  input%forcing%water_levels
 ! input_percent_forcing_percent_currents    =>  input%forcing%currents
-! input_percent_forcing_percent_winds	    =>  input%forcing%winds
+! input_percent_forcing_percent_winds       =>  input%forcing%winds
 ! input_percent_forcing_percent_ice_conc    =>  input%forcing%ice_conc
 ! input_percent_forcing_percent_ice_param1  =>  input%forcing%ice_param1
+! input_percent_forcing_percent_ice_param1  =>  input%forcing%ice_param2
+! input_percent_forcing_percent_ice_param1  =>  input%forcing%ice_param3
+! input_percent_forcing_percent_ice_param1  =>  input%forcing%ice_param4
 ! input_percent_forcing_percent_ice_param5  =>  input%forcing%ice_param5
+! input_percent_forcing_percent_ice_param5  =>  input%forcing%atm_momentum
+! input_percent_forcing_percent_ice_param5  =>  input%forcing%air_density
+! input_percent_forcing_percent_ice_param5  =>  input%forcing%mud_momentum
+!
+! input_percent_assim_percent_mean   => input%assim%mean
+! input_percent_assim_percent_spec1d => input%assim%spec1d
+! input_percent_assim_percent_spec2d => input%assim%spec2d
 ! 
 ! type_percent_field_percent_list =>  type%field%list
 ! type_percent_point_percent_file =>  type%point%file
-! 
-! date_percent_field_percent_outffile =>  date%field%outffile
-! date_percent_field_percent_start    =>  date%field%start
-! date_percent_field_percent_stride   =>  date%field%stride
-! date_percent_field_percent_stop     =>  date%field%stop
-! date_percent_restart_percent_start  =>  date%restart%start
-! date_percent_restart_percent_stride =>  date%restart%stride
-! date_percent_restart_percent_stop   =>  date%restart%stop
-! date_percent_restart2_percent_start =>  date%restart2%start
-! date_percent_restart2_percent_strid =>  date%restart2%stride
-! date_percent_restart2_percent_stop  =>  date%restart2%stop
 !----------------------------------------------------------------------------------
