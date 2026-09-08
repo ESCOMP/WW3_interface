@@ -222,10 +222,13 @@ def _prestage_inputs(case):
                     safe_copy(os.path.join(input_dir, filename), os.path.join(output_dir, filename))
 
         # Create mod_def file using ww3_grid and the grid_input files
+        # ww3_grid reads ww3_grid.nml if present, otherwise ww3_grid.inp
+        has_grid_input = any(os.path.isfile(os.path.join(output_dir, f))
+                             for f in ("ww3_grid.nml", "ww3_grid.inp"))
         if not os.path.isfile(os.path.join(output_dir,"ww3_grid")):
             logger.warning("ww3_grid file not found. The mod_def.ww3 file will be created after the build phase.")
-        elif not os.path.isfile(os.path.join(output_dir,"ww3_grid.inp")):
-            logger.warning("ww3_grid.inp file not found. The file will automatically be downloaded at the ./case.submit phase.")
+        elif not has_grid_input:
+            logger.warning("ww3_grid.nml/inp file not found. The file will automatically be downloaded at the ./case.submit phase.")
         else:
             # Generate mod_def.ww3 file using ww3_grid executable and the grid_input files
             run_cmd("./ww3_grid > mod_def.ww3.log", from_dir=output_dir)
