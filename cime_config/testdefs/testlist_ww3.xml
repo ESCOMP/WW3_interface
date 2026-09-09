@@ -130,4 +130,12 @@
       <option name="wallclock">01:00:00</option>
     </options>
   </test>
+  <test name="ERS_Ld3" grid="TL319_wu2r05" compset="W_JRA">
+    <machines>
+      <machine name="derecho" compiler="intel" category="aux_ww3"/>
+    </machines>
+    <options>
+      <option name="wallclock">01:00:00</option>
+    </options>
+  </test>
 </testlist>
