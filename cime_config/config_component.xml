@@ -50,6 +50,15 @@
     </desc>
   </entry>
 
+    <entry id="WW3_NEST">
+    <type>char</type>
+    <default_value>unset</default_value>
+    <group>case_comp</group>
+    <file>env_build.xml</file>
+    <desc>nest file to use in regional model.  If 'unset', nest.ww3 is generated from ww3_bounc and the boundary condition input files Note that this file is renamed to nest.ww3 in the run directory.
+    </desc>
+  </entry>
+
   <entry id="WW3_GRID_INP_DIR">
     <type>char</type>
     <default_value>$DIN_LOC_ROOT/wav/ww3/grid_inp.${WAV_GRID}</default_value>
