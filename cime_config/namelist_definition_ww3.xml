@@ -135,6 +135,7 @@
       <value wav_grid="ww3a">$WW3_GRID_INP_DIR/ww3_grid.inp</value>
       <value wav_grid="wgx3v7">$WW3_GRID_INP_DIR/ww3_grid.inp</value>
       <value wav_grid="wtx2_3v2">$WW3_GRID_INP_DIR/ww3_grid.inp</value>
+      <value wav_grid="wu2r05">$WW3_GRID_INP_DIR/ww3_grid.nml</value>
     </values>
     <desc>Grid input file; listed so check_input_data can download it.</desc>
   </entry>
@@ -153,6 +154,30 @@
     <desc>Grid strt file; listed so check_input_data can download it.</desc>
   </entry>
 
+  <entry id="grid_inp_nml">
+    <type>char</type>
+    <group>prestage_only</group>
+    <category>prestage_only</category>
+    <input_pathname>abs</input_pathname>
+    <values>
+      <value>UNSET</value>
+      <value wav_grid="wu2r05">$WW3_GRID_INP_DIR/namelists.nml</value>
+    </values>
+    <desc>Grid namelists file for unstructured grids; listed so check_input_data can download it.</desc>
+  </entry>
+
+  <entry id="grid_inp_mesh">
+    <type>char</type>
+    <group>prestage_only</group>
+    <category>prestage_only</category>
+    <input_pathname>abs</input_pathname>
+    <values>
+      <value>UNSET</value>
+      <value wav_grid="wu2r05">$WW3_GRID_INP_DIR/mesh.msh</value>
+    </values>
+    <desc>Unstructured grid mesh; listed so check_input_data can download it.</desc>
+  </entry>
+
   <entry id="dtmax">
     <type>real</type>
     <group>ww3_inparm</group>
@@ -164,6 +189,7 @@
       <value wav_grid="wtx2_3v2">1200.</value>
       <value wav_grid="wtnx1v4">1800.</value>
       <value wav_grid="w025">1200.</value>
+      <value wav_grid="wu2r05">900.</value>
     </values>
     <desc>
       Maximum overall time step
@@ -180,6 +206,7 @@
       <value wav_grid="wtx2_3v2">450.</value>
       <value wav_grid="wtnx1v4">900.</value>
       <value wav_grid="w025">600.</value>
+      <value wav_grid="wu2r05">900.</value>
     </values>
     <desc>
       Maximum CFL time step X-Y propagation.
@@ -196,6 +223,7 @@
       <value wav_grid="wtx2_3v2">900</value>
       <value wav_grid="wtnx1v4">900.</value>
       <value wav_grid="w025">600.</value>
+      <value wav_grid="wu2r05">900.</value>
     </values>
     <desc>
       Id. intra-spectral
@@ -207,6 +235,7 @@
     <category>setup</category>
     <values>
       <value>10</value>
+      <value wav_grid="wu2r05">900</value>
     </values>
     <desc>
       Minimum dynamic time step for source

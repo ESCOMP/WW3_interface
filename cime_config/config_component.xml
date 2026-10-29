@@ -22,6 +22,7 @@
       <value grid="_w%wise.tnx1v4p.100k">TRUE</value>
       <value grid="_w%tri1degmask">TRUE</value>
       <value grid="_w%w025">TRUE</value>
+      <value grid="_w%wu2r05">TRUE</value>
     </values>
     <group>case_comp</group>
     <file>env_build.xml</file>
@@ -57,6 +58,7 @@
       <value grid="_w%ww3a">$DIN_LOC_ROOT/wav/ww3/grid_inp.${WAV_GRID}.231018</value>
       <value grid="_w%wgx3v7">$DIN_LOC_ROOT/wav/ww3/grid_inp.${WAV_GRID}.260527</value>
       <value grid="_w%wtx2_3v2">$DIN_LOC_ROOT/wav/ww3/grid_inp.${WAV_GRID}.240722</value>
+      <value grid="_w%wu2r05">$DIN_LOC_ROOT/wav/ww3/grid_inp.${WAV_GRID}.260908</value>
     </values>
     <group>case_comp</group>
     <file>env_build.xml</file>
